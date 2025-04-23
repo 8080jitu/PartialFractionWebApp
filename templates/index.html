@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Partial Fraction Decomposition</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Partial Fraction Decomposition</h1>
+    <form method="POST">
+        <label>Numerator:</label><br>
+        <input type="text" name="numerator" required><br>
+        <label>Denominator:</label><br>
+        <input type="text" name="denominator" required><br>
+        <label>Variable:</label><br>
+        <input type="text" name="variable" value="x" required><br><br>
+        <button type="submit">Compute</button>
+    </form>
+    <h2>Result:</h2>
+    <p>{{ result }}</p>
+</body>
+</html>
