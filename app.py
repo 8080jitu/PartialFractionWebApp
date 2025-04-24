@@ -5,7 +5,6 @@ import re
 app = Flask(__name__)
 
 def preprocess(expr):
-    # Logic to preprocess input (similar to your original code)
     expr = re.sub(r'(?<=[\d\w\)])(?=\()', '*', expr)
     expr = re.sub(r'(\d)([a-zA-Z(])', r'\1*\2', expr)
     return expr
@@ -25,7 +24,10 @@ def home():
 
             expr = num_expr / denom_expr
             apart_expr = sp.apart(expr, symbol)
-            result = str(apart_expr)
+            
+            # Convert to LaTeX for proper fraction formatting
+            result = sp.latex(apart_expr)
+
         except Exception as e:
             result = f"Error: {e}"
 
