@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request
 import sympy as sp
 import re
+import os
 
 app = Flask(__name__)
 
+# Preprocessing function to format mathematical expressions correctly
 def preprocess(expr):
     expr = re.sub(r'(?<=[\d\w\)])(?=\()', '*', expr)
     expr = re.sub(r'(\d)([a-zA-Z(])', r'\1*\2', expr)
@@ -43,7 +45,10 @@ def ztransform():
             symbol = sp.Symbol(variable)
             seq_expr = sp.sympify(preprocess(sequence_expr))
 
-            z_transformed = sp.ztrans(seq_expr, symbol)
+            # Compute Z-transform using summation formula for more control
+            z = sp.Symbol('z')
+            n = sp.Symbol('n')
+            z_transformed = sp.summation(seq_expr * z**(-n), (n, 0, sp.oo))
             
             z_result = sp.latex(z_transformed)
 
@@ -52,7 +57,10 @@ def ztransform():
 
     return render_template("ztransform.html", result=z_result)
 
+# Ensure dynamic port handling for deployment platforms like Railway
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+    port = int(os.environ.get("PORT", 8000))
+    app.run(host="0.0.0.0", port=port)
+
 
 

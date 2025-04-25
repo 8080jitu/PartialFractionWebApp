@@ -24,65 +24,80 @@
             border-radius: 8px;
             font-size: 18px;
         }
+        .loading-spinner {
+            display: none;
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-center">Math Computation Tool</h1>
-        <ul class="nav nav-pills justify-content-center mb-4">
-            <li class="nav-item">
-                <a class="nav-link active" href="/">Partial Fractions</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/ztransform">Z-Transform</a>
-            </li>
-        </ul>
+    <div class="container text-center">
+        <h1>Math Computation Tool</h1>
 
-        <!-- Partial Fraction Form -->
-        <h2 class="text-center">Partial Fraction Decomposition</h2>
-        <form method="POST">
-            <div class="mb-3">
-                <label class="form-label">Numerator:</label>
-                <input type="text" class="form-control" name="numerator" required 
-                       value="{{ request.form['numerator'] if request.form else '' }}">
+        <div id="selection-screen">
+            <h2>Select an Operation</h2>
+            <button class="btn btn-primary" onclick="showForm('partial')">Partial Fraction</button>
+            <button class="btn btn-success" onclick="showForm('ztransform')">Z-Transform</button>
+        </div>
+
+        <div id="partial-form" class="hidden">
+            <h2 class="text-center">Partial Fraction Decomposition</h2>
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Numerator:</label>
+                    <input type="text" class="form-control" id="numerator" name="numerator" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Denominator:</label>
+                    <input type="text" class="form-control" id="denominator" name="denominator" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Variable:</label>
+                    <input type="text" class="form-control" name="variable" value="x" required>
+                </div>
+                <p id="error-message" class="text-danger hidden">Please fill in all fields correctly.</p>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" onclick="startLoading()">Compute</button>
+                </div>
+            </form>
+            <div class="loading-spinner">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p>Computing...</p>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Denominator:</label>
-                <input type="text" class="form-control" name="denominator" required 
-                       value="{{ request.form['denominator'] if request.form else '' }}">
+        </div>
+
+        <div id="ztransform-form" class="hidden">
+            <h2 class="text-center">Z-Transform Computation</h2>
+            <form method="POST" action="/ztransform">
+                <div class="mb-3">
+                    <label class="form-label">Sequence:</label>
+                    <input type="text" class="form-control" name="sequence" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Variable:</label>
+                    <input type="text" class="form-control" name="variable" value="n" required>
+                </div>
+                <p id="z-error-message" class="text-danger hidden">Please fill in all fields correctly.</p>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success" onclick="startLoading()">Compute Z-Transform</button>
+                </div>
+            </form>
+            <div class="loading-spinner">
+                <div class="spinner-border text-success" role="status"></div>
+                <p>Computing...</p>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Variable:</label>
-                <input type="text" class="form-control" name="variable" value="{{ request.form['variable'] if request.form else 'x' }}" required>
-            </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">Compute</button>
-            </div>
-        </form>
+        </div>
 
         {% if result %}
-        <h2 class="text-center mt-4">Result:</h2>
+        <h2 class="text-center mt-4">Partial Fraction Result:</h2>
         <div class="result-box text-center">
             <p>Question: $$ \frac{ {{ request.form['numerator'] }} }{ {{ request.form['denominator'] }} } $$</p>
             <p>Answer: $$ {{ result }} $$</p>
         </div>
         {% endif %}
-
-        <!-- Z-Transform Form -->
-        <h2 class="text-center mt-5">Z-Transform Computation</h2>
-        <form method="POST" action="/ztransform">
-            <div class="mb-3">
-                <label class="form-label">Sequence:</label>
-                <input type="text" class="form-control" name="sequence" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Variable:</label>
-                <input type="text" class="form-control" name="variable" value="n" required>
-            </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-success">Compute Z-Transform</button>
-            </div>
-        </form>
 
         {% if z_result %}
         <h2 class="text-center mt-4">Z-Transform Result:</h2>
@@ -92,6 +107,30 @@
         </div>
         {% endif %}
     </div>
+
+    <script>
+        function showForm(type) {
+            document.getElementById("selection-screen").style.display = "none";
+            document.getElementById(type + "-form").style.display = "block";
+        }
+
+        function startLoading() {
+            let spinner = document.querySelector(".loading-spinner");
+            spinner.style.display = "block";
+
+            let errorMessage = document.getElementById("error-message");
+            let numerator = document.getElementById("numerator").value;
+            let denominator = document.getElementById("denominator").value;
+
+            if (!numerator || !denominator) {
+                errorMessage.classList.remove("hidden");
+                spinner.style.display = "none";
+                return false;
+            } else {
+                errorMessage.classList.add("hidden");
+            }
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
