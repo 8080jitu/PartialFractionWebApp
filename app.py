@@ -4,6 +4,7 @@ import re
 import os
 
 app = Flask(__name__)
+app.debug = True  # Enable Flask Debug Mode for error tracking
 
 # Preprocessing function to format mathematical expressions correctly
 def preprocess(expr):
@@ -45,10 +46,10 @@ def ztransform():
             symbol = sp.Symbol(variable)
             seq_expr = sp.sympify(preprocess(sequence_expr))
 
-            # Compute Z-transform using summation formula for more control
+            # Compute Z-transform using finite summation (prevent infinite loop issues)
             z = sp.Symbol('z')
             n = sp.Symbol('n')
-            z_transformed = sp.summation(seq_expr * z**(-n), (n, 0, sp.oo))
+            z_transformed = sp.summation(seq_expr * z**(-n), (n, 0, 20))  # Summing up to n=20
             
             z_result = sp.latex(z_transformed)
 
@@ -57,10 +58,8 @@ def ztransform():
 
     return render_template("ztransform.html", result=z_result)
 
-# Ensure dynamic port handling for deployment platforms like Railway
+# Ensure dynamic port handling for Railway deployment
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
-    app.run(host="0.0.0.0", port=port)
-
+    port
 
 
