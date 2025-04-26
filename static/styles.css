@@ -30,4 +30,15 @@ button {
     color: white;
     border: none;
 }
+.result-box {
+    background: #e9ecef;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 18px;
+    overflow-x: auto; /* Allows scrolling instead of breaking the layout */
+    word-wrap: break-word; /* Ensures long expressions wrap */
+    max-width: 100%; /* Prevents expansion beyond container */
+    text-align: center; /* Keeps it aligned neatly */
+    white-space: nowrap; /* Prevents breaking inside LaTeX elements */
+}
 
