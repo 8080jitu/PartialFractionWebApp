@@ -1,0 +1,140 @@
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f0f8ff 0%, #e6eefc 100%);
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Main Container */
+.container {
+    max-width: 750px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styles */
+h1 {
+    color: #005f73;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #023e8a;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+/* Selection Screen */
+#selection-screen {
+    margin-bottom: 30px;
+}
+
+#selection-screen h2 {
+    margin-bottom: 20px;
+}
+
+/* Form Container */
+form {
+    margin: 20px auto;
+    padding: 25px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+}
+
+/* Form Inputs */
+input[type="text"],
+input[type="number"],
+textarea {
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+    width: 100%;
+    font-size: 16px;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0,123,255,0.2);
+}
+
+/* Button Styles */
+button {
+    margin: 10px 0;
+    padding: 12px 20px;
+    border-radius: 7px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-primary { background-color: #007bff; color: #fff; }
+.btn-success { background-color: #28a745; color: #fff; }
+.btn-warning { background-color: #ffc107; color: #fff; }
+
+button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* Matrix Table Styling */
+table {
+    margin: 15px auto;
+    border-collapse: collapse;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+input[type="number"] {
+    text-align: center;
+    width: 80px;
+}
+
+/* Results Box Styling */
+.result-box {
+    background: #e9ecef;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    overflow-x: auto;
+    word-wrap: break-word;
+    max-width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Error Message Styling */
+.text-danger {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Utility Class */
+.hidden {
+    display: none;
+}
